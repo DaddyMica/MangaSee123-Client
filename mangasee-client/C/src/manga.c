@@ -24,7 +24,7 @@ int check_api_key(char* api_key, char* uuid, char* tunnel)
 	cJSON* res_json = cJSON_Parse(response);
 	cJSON* test = cJSON_GetObjectItemCaseSensitive(res_json, "test");
 
-	if (test->valueint)
+	if (test->valueint) // why am i such a goat 
 		return 1;
 	else
 		return 0;
