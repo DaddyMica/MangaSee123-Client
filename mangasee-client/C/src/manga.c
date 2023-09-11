@@ -62,11 +62,11 @@ MangaSeeClient_t* new_manga_client(const char* tunnel, const char* auth_key)
 		if (client == NULL)
 			return NULL; // malloc failed 
 		// add shit to obj 
-		client->auth_key = auth_key;
-		client->api_key = new_api_key->valuestring;
-		client->uuid = new_uuid->valuestring;
-		client->tunnel = tunnel;
-		client->host = host;
+		client->auth_key    = auth_key;
+		client->api_key     = new_api_key->valuestring;
+		client->uuid        = new_uuid->valuestring;
+		client->tunnel      = tunnel;
+		client->host        = host;
 		client->host_status = host_status->valueint;
 
 		return client;
