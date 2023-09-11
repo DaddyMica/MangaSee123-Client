@@ -33,11 +33,11 @@ int check_api_key(char* api_key, char* uuid, char* tunnel)
 MangaSeeClient_t* new_manga_client(const char* tunnel, const char* auth_key)
 { // auth key & tunnel is needed to generate a new api-key & uuid for secure communication
 	// first validate tunnel & auth_key by getting new api key from the api
-	char* string_content = new_string_buffer(100);
-	char* endp1 = new_string_buffer(50);
-	char* endp2 = new_string_buffer(50);
-	char* host = get_host();
-	Conio_t* conio = new_conio();
+	char*    string_content = new_string_buffer(100);
+	char*    endp1          = new_string_buffer(50);
+	char*    endp2          = new_string_buffer(50);
+	char*    host           = get_host();
+	Conio_t* conio          = new_conio();
 	// concat the json content
 	sprintf(string_content, " { \"auth_key\": \"%s\", \"client\": \"c-0.0.1\", \"host\": \"%s\", \"os\": \"win\" } ", auth_key, host);
 	sprintf(endp1, "%s/api/gateway/authorize", tunnel);
