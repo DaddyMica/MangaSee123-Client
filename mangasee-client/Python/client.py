@@ -1,17 +1,53 @@
-# Client written by mica too ahlie
-# nobody tryna help LOL!
+# Python MangaSee123Api Wrapper
 # TODO: update client to wrap around new api functions
 # TODO: get more devs to help with wrapper objects
-# TODO: rewrite V0.0.1
-# TODO: rewrite in another language once proto's done?
 # imports
 from __future__  import annotations
-from   typing    import Union, List
+from   typing    import Union, List, Iterator, Iterable, Any, overload
 from   functools import cached_property
 # file imports\
 # for http requests
-import requests, json, base64
-# VERSION -> 1.0.2 -- NOTE: Added New Api Encryption/Decryption support
+import builtins
+import requests
+import json
+import base64
+import itertools
+# UPGRADED on -> 9/10/2023
+# VERSION     -> 1.0.3 --
+
+class MicaDict(dict): # customize the dict class
+    def iterate(self: MicaDict) -> Iterator:
+        return zip(self.keys(), self.values())
+
+    def mica_update(self: MicaDict, *args: Iterable[Any], **kwargs: Iterable[Any]) -> None:
+        # Needed a better dict class yfm
+        if args:
+            for obj in args:
+                for [key, value] in obj.items():
+                    self.update({key: value})
+
+        if kwargs:
+            for [key, value] in kwargs.items():
+                self.update({key: value})
+# Setup
+builtins.dict = MicaDict
+
+class MicaRequest(requests.Response):
+    def mica_handler(self: MicaRequest, key: str=None) -> Union[bool, Any]:
+        # shinin hard cuh we back up
+        # key = any key from the json to return
+        self.config = dict()
+        # pop an x pill like we malcon
+        if self.status_code < 204:
+            if bool(key):
+                return self.json().get(key, None)
+
+            else:
+                self.config.mica_update(**self.json())
+                return True
+# Setup
+requests.Response = MicaRequest
+
 class MangaSeeClient: # mainly verification shit in the constructor
     def __init__(self: MangaSeeClient, tunnel:str, auth_key: str, api_key: str=None, uuid: str=None):
         # Official MangaSee123Api Wrapper!
@@ -56,16 +92,19 @@ class MangaSeeClient: # mainly verification shit in the constructor
                 self.host             = host_addr
 
     @cached_property
-    def headers(self: MangaSeeClient) -> dict:
+    def __headers(self: MangaSeeClient) -> dict:
         # cached headers property
         return {"api_key": self.api_key, "uuid": self.uuid}
 
-    def check_api_key(self: MangaSeeClient) -> bool:
-        # function to check [new] api key basically
-        res2 = requests.get(f"{self.tunnel}/api/ping", json=self.headers)
+    def get_headers(self: MangaSeeClient) -> Union[dict, bool]:
+        headers = dict()
+        res2    = requests.get(f"{self.tunnel}/api/ping", json=self.headers)
         # check response
-        if res2.status_code < 204:
-            self.test = res2.json()['test'] # for debugging shit
+        if res2.mica_handler():
+            if res2.config['test']:
+                headers.mica_update(**self.__headers)
+
+        return headers
 
     def get_page(self: MangaSeeClient, title: str, chapter: int, page: int) -> Union[str, None]:
         # example function for cloning usage
