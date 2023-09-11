@@ -48,8 +48,8 @@ MangaSeeClient_t* new_manga_client(const char* tunnel, const char* auth_key)
 	cJSON* parsed_res = cJSON_Parse(response);
 
 	cJSON* new_api_key = cJSON_GetObjectItemCaseSensitive(parsed_res, "api_key");
-	cJSON* new_uuid = cJSON_GetObjectItemCaseSensitive(parsed_res, "uuid");
-	cJSON* verified = cJSON_GetObjectItemCaseSensitive(parsed_res, "authenticated");
+	cJSON* new_uuid    = cJSON_GetObjectItemCaseSensitive(parsed_res, "uuid");
+	cJSON* verified    = cJSON_GetObjectItemCaseSensitive(parsed_res, "authenticated");
 	cJSON* host_status = cJSON_GetObjectItemCaseSensitive(parsed_res, "host_status");
 
 	// verify new api key
