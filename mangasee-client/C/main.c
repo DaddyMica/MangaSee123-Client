@@ -196,5 +196,7 @@ void main(void)
 	conio->log(manga_client->uuid);
 	conio->log(manga_client->host);
 
+	free(manga_client);
+	free(conio);
 	return;
 }
