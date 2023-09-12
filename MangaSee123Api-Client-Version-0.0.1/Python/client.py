@@ -68,10 +68,10 @@ class MangaSeeClient: # mainly verification shit in the constructor
         elif api_key and uuid:
             self.api_key = api_key
             self.uuid    = uuid
-            self.tunnel           = tunnel
+            self.tunnel  = tunnel
             # check headers
             if self.check_api_key():
-                self.verified_session = Truel
+                self.verified_session = True
                 self.host             = host_addr
 
     @cached_property
@@ -88,7 +88,7 @@ class MangaSeeClient: # mainly verification shit in the constructor
         if res.status_code < 204:
             config = res.json()
             # get the url
-            return config.get(f"{title}-{chapter}-{page}", None)
+            return config.get("url", None)
 
     def __str__(self: MangaSeeClient) -> str:
         # str dunder
