@@ -83,7 +83,7 @@ class MangaSeeClient: # mainly verification shit in the constructor
         # example function for cloning usage
         # written by nebula
         # request into the api
-        res = requests.get(f"{self.tunnel}/api/mangas/{title}/chapters/{chapter}/pages/{page}", json=self.headers)
+        res = requests.get(f"{self.tunnel}/api/mangas/{title}/chapters/{chapter}/pages/{page}", json=self.__headers)
         # check response
         if res.status_code < 204:
             config = res.json()
